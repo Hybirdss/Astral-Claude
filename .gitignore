@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+dist/
+.env*
+!.env.example
+artifacts/
+.DS_Store
+Thumbs.db
+*.blend1

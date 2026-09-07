@@ -1,0 +1,30 @@
+name: Checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  portable:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.22"
+      - run: uv sync --frozen --python 3.12
+      - run: uv run --frozen ruff check .
+      - run: uv run --frozen pytest
+      - run: uv run --frozen astral-desktop doctor
+  desktop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.22"
+      - run: sudo apt-get update && sudo apt-get install -y xvfb xauth libx11-6 libxext6 libxrender1 libxtst6
+      - run: uv sync --frozen --python 3.12
+      - run: xvfb-run -a -s '-screen 0 1280x800x24' env ASTRAL_TEST_DESKTOP=1 uv run --frozen python tests/desktop_smoke.py

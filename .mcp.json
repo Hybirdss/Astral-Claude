@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "astral-desktop": {
+      "command": "uv",
+      "args": ["run", "--frozen", "--directory", "${CLAUDE_PLUGIN_ROOT}", "--python", "3.12", "astral-desktop", "serve"]
+    }
+  }
+}

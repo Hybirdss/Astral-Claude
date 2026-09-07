@@ -1,0 +1,8 @@
+{
+  "name": "astral-claude",
+  "version": "0.1.0",
+  "description": "Computer-use tools and skills for desktop apps, Blender, and unfamiliar software.",
+  "author": {"name": "Hybirdss"},
+  "repository": "https://github.com/Hybirdss/Astral-Claude",
+  "license": "MIT"
+}

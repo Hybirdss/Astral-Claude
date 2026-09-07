@@ -1,0 +1,8 @@
+{
+  "name": "astral-claude",
+  "owner": {"name": "Hybirdss"},
+  "metadata": {"description": "Portable computer-use tools and practical desktop skills for Claude Code."},
+  "plugins": [
+    {"name": "astral-claude", "source": "./", "description": "Desktop computer use with reusable skills and a local MCP server."}
+  ]
+}
