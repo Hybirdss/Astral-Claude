@@ -1,0 +1,27 @@
+name: Application workflow
+description: Propose or report a workflow for a specific desktop application.
+labels: [app-workflow]
+body:
+  - type: input
+    id: app
+    attributes:
+      label: Application and version
+      placeholder: "Inkscape 1.4, LibreOffice Calc 25.2, FreeCAD 1.0"
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: Concrete task and desired artifact
+      description: A small reproducible example with the expected output format.
+    validations:
+      required: true
+  - type: textarea
+    id: surface
+    attributes:
+      label: Control surface that worked or failed
+      description: Native API, CLI, scripting console, accessibility, or GUI only. Which OS did you test on?
+  - type: textarea
+    id: traps
+    attributes:
+      label: Focus, mode, or dialog traps observed

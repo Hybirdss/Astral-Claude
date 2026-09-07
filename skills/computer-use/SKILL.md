@@ -10,16 +10,19 @@ Reuse their stated preferences and authorization; resolve ordinary reversible de
 
 ## Find the right control surface
 
-Discover actual tools before using them. The bundled MCP exposes `desktop_status`,
-`desktop_observe`, and `desktop_act` (the host adds a namespace). Call status, then observe.
-If these tools are missing, read [setup](../../docs/platforms.md); a skill alone supplies no
-mouse, screenshot, browser, or application access. Do not invent tool names or tool results.
+Discover actual tools before using them. The bundled desktop MCP exposes `desktop_status`,
+`desktop_observe`, and `desktop_act` (the host adds a namespace). Call status, then observe;
+status reports `primary_modifier` (`ctrl` or `command`) for shortcuts. The bundled Blender MCP
+adds live-session tools such as `get_scene_info` and `execute_blender_code` when its addon is
+connected. If tools are missing, read [setup](../../docs/platforms.md); a skill alone supplies
+no mouse, screenshot, browser, or application access. Do not invent tool names or tool results.
 
 For each operation, select the most reliable available surface:
 
 | Operation | Preferred surface | Verification |
 | --- | --- | --- |
 | Exact geometry, formulas, bulk edits | App API, native scripting, CLI | Inspect app state and saved output |
+| Open Blender document: data, edits, viewport image | Blender MCP tools ([Blender skill](../blender/SKILL.md)) | Scene queries plus a viewport screenshot |
 | Web DOM, forms, navigation | Existing browser accessibility/DOM tools | Screenshot and relevant page state |
 | Menus, dialogs, canvas, app-only controls | Desktop screenshot and input | Observe the changed interface |
 | Composition, spacing, materials, readability | Render/export plus image inspection | Compare with the requested outcome |
@@ -50,8 +53,10 @@ Example payload after visually locating a field:
 The returned ID replaces the previous one. Use `key` with `keys: ["ctrl", "s"]` on Linux/
 Windows or `["command", "s"]` on macOS. Observe focus before typing. `type_text` uses ASCII
 keystrokes; `paste_text` handles Unicode but temporarily changes the clipboard and restores
-only text. Use paste only when this clipboard effect is acceptable. Check keyboard layout
-if punctuation comes out incorrectly. Use `max_dimension: 2400` to read small UI text.
+only text after `duration` seconds. Use paste only when this clipboard effect is acceptable.
+Key names the current OS cannot press are rejected with a hint instead of silently dropped.
+Check keyboard layout if punctuation comes out incorrectly. Observe with `max_dimension: 2400`
+to read small UI text; screenshots returned by actions keep that resolution.
 
 ## Keep work grounded
 

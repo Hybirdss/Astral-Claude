@@ -20,6 +20,10 @@ appearance, and revise if needed. The verification script checks objects, dimens
 and image size; it cannot tell whether a render looks good. To inspect the native scene in
 Blender's GUI, open the saved `.blend` on the desktop controlled by the MCP server.
 
+For a document that is already open in Blender, the [Blender skill](../../skills/blender/SKILL.md)
+uses the bundled Blender MCP server instead: scene queries, `bpy` snippets in the live session,
+and viewport screenshots, without writing or reopening files first.
+
 This example demonstrates the native scripting half of a hybrid workflow. It does not pretend
 to be a GUI-driven modeling benchmark. `scene.py` deletes the fresh startup scene; do not run
 it inside a user's existing document. Read the [Blender skill](../../skills/blender/SKILL.md)

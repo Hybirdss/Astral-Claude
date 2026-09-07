@@ -1,0 +1,14 @@
+name: Feature request
+description: Suggest a tool, skill, or documentation improvement.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Task that currently fails or takes unnecessary steps
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change and how it would be verified
