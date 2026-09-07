@@ -40,6 +40,22 @@ def test_retina_and_resized_coordinates_map_once(desktop):
     assert new.png.startswith(b"\x89PNG")
 
 
+def test_act_keeps_the_requested_resolution(desktop):
+    controller, backend = desktop
+    obs = controller.observe(2400)
+    assert obs.image_size == (2400, 1350)
+    new = controller.act(obs.id, Action(action="key", keys=["enter"]))
+    assert new.image_size == (2400, 1350)
+    assert controller.observe().image_size == (1600, 900)
+
+
+@pytest.mark.parametrize("max_dimension", [639, 2401])
+def test_observe_rejects_out_of_range_dimension(desktop, max_dimension):
+    controller, _ = desktop
+    with pytest.raises(ValueError, match="max_dimension"):
+        controller.observe(max_dimension)
+
+
 def test_repeated_and_superseded_ids_are_rejected(desktop):
     controller, backend = desktop
     old = controller.observe()
@@ -107,6 +123,15 @@ def test_mismatched_capture_geometry_rejected(desktop):
         controller.observe()
 
 
+def test_numeric_coordinates_round_to_whole_pixels():
+    assert Action(action="click", x=480.4, y=319.6).model_dump()["x"] == 480
+    assert Action(action="click", x=480.4, y=319.6).y == 320
+    parsed = Action.model_validate_json(
+        '{"action": "drag", "x": 1.0, "y": 2.0, "end_x": 3.5, "end_y": 4}'
+    )
+    assert (parsed.x, parsed.y, parsed.end_x, parsed.end_y) == (1, 2, 4, 4)
+
+
 @pytest.mark.parametrize(
     "payload",
     [
@@ -116,6 +141,10 @@ def test_mismatched_capture_geometry_rejected(desktop):
         {"action": "type_text", "text": "안녕"},
         {"action": "wait", "duration": float("inf")},
         {"action": "click", "x": True, "y": 2},
+        {"action": "click", "x": "480", "y": 2},
+        {"action": "click", "x": float("nan"), "y": 2},
+        {"action": "click", "x": float("inf"), "y": 2},
+        {"action": "click", "x": 1, "y": 2, "clicks": 3},
         {"action": "click", "x": 1, "y": 2, "unknown": "field"},
     ],
 )
@@ -144,4 +173,14 @@ def test_concurrent_same_id_delivers_at_most_once(desktop):
     with ThreadPoolExecutor(2) as pool:
         results = list(pool.map(lambda _: click(), range(2)))
     assert sorted(results) == [False, True]
+    assert len(backend.actions) == 1
+
+
+@pytest.mark.parametrize("dimension", [True, "800", 800.5, float("nan"), None])
+def test_invalid_dimension_leaves_existing_observation_usable(desktop, dimension):
+    controller, backend = desktop
+    obs = controller.observe()
+    with pytest.raises(ValueError, match="max_dimension"):
+        controller.observe(dimension)
+    controller.act(obs.id, Action(action="click", x=10, y=20))
     assert len(backend.actions) == 1

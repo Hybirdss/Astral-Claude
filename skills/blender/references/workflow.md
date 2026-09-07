@@ -15,6 +15,8 @@
 Headless execution has no interactive 3D viewport. Use the data API when there is no suitable
 UI context. If an operator is required, inspect its installed-version documentation and set
 the actual prerequisites; do not assume a successful call changed the intended object.
+Code sent through `execute_blender_code` has the open session's context, including a viewport,
+but still runs outside any specific editor region.
 
 ## Structural evidence
 
@@ -22,6 +24,7 @@ Use assertions tied to the user's task: expected object names and types, dimensi
 active render camera, frame range, export format, and existence of linked images. Reopen the
 saved file in another Blender process to detect failures hidden by in-memory state.
 Use `blender --background file.blend --python-exit-code 1 --python verify.py`.
+In a live session, `get_object_info` gives bounding boxes and mesh counts for quick checks.
 
 ## Visual evidence
 
@@ -29,6 +32,7 @@ Inspect the saved render, including full-frame composition and details at final 
 Watch for clipped silhouettes, floating objects, excessively dark materials, distracting
 highlights, unreadable text, missing textures, and camera changes that invalidate the brief.
 For animation, sample representative frames and transitions; one still is not animation QA.
+A viewport screenshot shows overlays and the current shading mode, not the final render.
 
 Primary references: [Python API](https://docs.blender.org/api/current/),
 [operator context](https://developer.blender.org/docs/features/interface/operators/), and

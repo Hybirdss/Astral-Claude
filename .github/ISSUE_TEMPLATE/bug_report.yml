@@ -1,0 +1,45 @@
+name: Bug report
+description: A tool call, skill, or workflow misbehaved.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not attach private desktop screenshots, credentials, or proprietary documents.
+        Redact paths and user names; describe what the screen showed instead of pasting it.
+  - type: input
+    id: environment
+    attributes:
+      label: OS, session, and display
+      placeholder: "Windows 11 / macOS 15 / Ubuntu 24.04 X11 / Xvfb; single 1920x1080 display at 100%"
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: "Claude Code x.y.z, astral-claude x.y.z, Blender x.y (if relevant)"
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `uv run --frozen astral-desktop doctor` or the `desktop_status` tool
+      render: json
+  - type: textarea
+    id: steps
+    attributes:
+      label: What you asked for and what happened
+      description: The task prompt, the tool calls or skill involved, expected behavior, actual behavior.
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Control surface involved
+      options:
+        - desktop MCP (screenshot, mouse, keyboard)
+        - Blender MCP (live session tools)
+        - Blender background scripts
+        - skill guidance only
+        - not sure

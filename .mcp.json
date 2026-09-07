@@ -3,6 +3,11 @@
     "astral-desktop": {
       "command": "uv",
       "args": ["run", "--frozen", "--directory", "${CLAUDE_PLUGIN_ROOT}", "--python", "3.12", "astral-desktop", "serve"]
+    },
+    "blender": {
+      "command": "uvx",
+      "args": ["--python", "3.12", "--from", "blender-mcp==1.9.1", "blender-mcp"],
+      "env": {"DISABLE_TELEMETRY": "true"}
     }
   }
 }
