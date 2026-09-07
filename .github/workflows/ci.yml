@@ -25,6 +25,6 @@ jobs:
       - uses: astral-sh/setup-uv@v6
         with:
           version: "0.8.22"
-      - run: sudo apt-get update && sudo apt-get install -y xvfb xauth libx11-6 libxext6 libxrender1 libxtst6
+      - run: sudo apt-get update && sudo apt-get install -y xvfb xauth python3-tk libx11-6 libxext6 libxrender1 libxtst6
       - run: uv sync --frozen --python 3.12
       - run: xvfb-run -a -s '-screen 0 1280x800x24' env ASTRAL_TEST_DESKTOP=1 uv run --frozen python tests/desktop_smoke.py

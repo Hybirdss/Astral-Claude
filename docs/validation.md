@@ -15,6 +15,9 @@ the operator's live Wayland desktop was not controlled.
 | `tests/desktop_smoke.py` in Xvfb | Actual MCP PNG → scaled click → text entry → button click → saved text verified |
 | Blender example | Fresh scene generated, `.blend` saved, 960×720 PNG rendered; second process reopened scene and checked objects, camera, dimensions, and PNG |
 | Render inspection | Actual PNG viewed: complete lamp silhouette, legible joints/switch, grounded base, no frame clipping |
+| Public marketplace installation | Installed from GitHub in temporary Claude settings; four skills and one MCP server discovered |
+| Cached plugin runtime | Locked runtime launched from a cached public install with an unrelated working directory |
+| GitHub OS matrix | Unit/protocol tests, lint, and doctor passed on ubuntu-latest, windows-latest, and macos-latest |
 
 The render shown in README is the inspected output. It is a basic reproducible scene, not a
 claim of expert modeling or autonomous aesthetic performance.
