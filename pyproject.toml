@@ -26,7 +26,7 @@ classifiers = [
   "Topic :: Software Development :: Testing",
 ]
 dependencies = [
-  "mcp>=1.26,<2", "mss>=10,<11", "Pillow>=11,<13",
+  "mcp>=1.26,<3", "mss>=10,<11", "Pillow>=11,<13",
   "PyAutoGUI>=0.9.54,<0.10", "pyperclip>=1.9,<2", "filelock>=3.16,<4",
 ]
 
